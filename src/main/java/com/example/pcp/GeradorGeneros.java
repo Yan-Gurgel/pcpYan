@@ -2,34 +2,34 @@ package com.example.pcp;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
-
-public class GeradorPessoas {
 
 
-    public ArrayList pessoas(int numPessoas) {
+public class GeradorGeneros {
+
+
+    public ArrayList generos(int numPessoas) {
 
         //genero deve ser gerado aleatório mas no final a quantidade para os 3 deve ser a mesma
         int qdtGeneroA = numPessoas / 3;
         int qdtGeneroB = numPessoas / 3;
         int qdtGeneroC = numPessoas / 3;
 
-        //Criando fila de generos com quantidades iguais
-        ArrayList<String> fila = new ArrayList();
+        //Criando filaGeneros de generos com quantidades iguais
+        ArrayList<String> filaGeneros = new ArrayList();
         for (int i = 0; i < qdtGeneroA; i++) {
-            fila.add("GeneroA");
+            filaGeneros.add("GeneroA");
         }
         for (int j = 0; j < qdtGeneroB; j++) {
-            fila.add("GeneroB");
+            filaGeneros.add("GeneroB");
         }
         for (int k = 0; k < qdtGeneroC; k++) {
-            fila.add("GeneroC");
+            filaGeneros.add("GeneroC");
         }
 
-        //Embaralhando a fila
-        Collections.shuffle(fila);
+        //Embaralhando a filaGeneros
+        Collections.shuffle(filaGeneros);
 
-        return fila;
+        return filaGeneros;
 
     }
 }

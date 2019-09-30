@@ -1,10 +1,16 @@
 package com.example.pcp;
 
-public class GeradorThreads {
+public class GeradorThreads extends Thread {
 
-    public void geracaoThread (String Genero){
-        new Thread(Genero).start();
-        System.out.println("Pessoa:" + Genero);
 
+    public Thread geracaoThread(String Genero, int ID) throws InterruptedException {
+        Pessoa pessoa = new Pessoa();
+        pessoa.setGenero(Genero);
+        pessoa.setID(ID);
+        pessoa.setTempoEntradaFila(System.currentTimeMillis());
+        //sleep(500);
+        pessoa.start();
+        return pessoa;
     }
+
 }
