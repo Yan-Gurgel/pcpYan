@@ -2,10 +2,9 @@ package com.example.pcp;
 
 public class Pessoa extends Thread {
     private int ID;
-    private float tempoEntradaFila;
-    private float tempoSaidaFila;
+    private String horaEntradaFila;
+    private String horaSaidaFila;
     private String genero;
-
 
     public int getID() {
         return ID;
@@ -15,20 +14,20 @@ public class Pessoa extends Thread {
         this.ID = ID;
     }
 
-    public float getTempoEntradaFila() {
-        return tempoEntradaFila;
+    public String getHoraEntradaFila() {
+        return horaEntradaFila;
     }
 
-    public void setTempoEntradaFila(float tempoEntradaFila) {
-        this.tempoEntradaFila = tempoEntradaFila;
+    public void setHoraEntradaFila(String horaEntradaFila) {
+        this.horaEntradaFila = horaEntradaFila;
     }
 
-    public float getTempoSaidaFila() {
-        return tempoSaidaFila;
+    public String getHoraSaidaFila() {
+        return horaSaidaFila;
     }
 
-    public void setTempoSaidaFila(float tempoSaidaFila) {
-        this.tempoSaidaFila = tempoSaidaFila;
+    public void setHoraSaidaFila(String horaSaidaFila) {
+        this.horaSaidaFila = horaSaidaFila;
     }
 
     public String getGenero() {

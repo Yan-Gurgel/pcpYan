@@ -14,36 +14,49 @@ public class PcpYanApplication {
 
         int numPessoas;
         int numeroBox;
+
+        ArrayList<Pessoa> filaGeneroA = new ArrayList();
+        ArrayList<Pessoa> filaGeneroB = new ArrayList();
+        ArrayList<Pessoa> filaGeneroC = new ArrayList();
+
         Scanner ler = new Scanner(System.in);
         System.out.print("Insira o número de generos: ");
         numPessoas = ler.nextInt();
         System.out.print("Insira o número de box: ");
         numeroBox = ler.nextInt();
 
-        ArrayList<String> filaEspera = new ArrayList();
+        ArrayList<String> filaEsperaGeral = new ArrayList();
         GeradorGeneros gerar = new GeradorGeneros();
-        filaEspera = gerar.generos(numPessoas);
-
-//        for (int i =0 ; i<filaEspera.size(); i++){
-//            System.out.println("Fila Geral: "+filaEspera.get(i));
-//        }
-
-        ArrayList<String> filaGeneroA = new ArrayList();
-        ArrayList<String> filaGeneroB = new ArrayList();
-        ArrayList<String> filaGeneroC = new ArrayList();
+        filaEsperaGeral = gerar.generos(numPessoas);
 
         GeradorThreads iniciar = new GeradorThreads();
 
-        Pessoa pessoa = new Pessoa();
-
-        for (int i = 0; i < filaEspera.size(); i++) {
-            pessoa = (Pessoa) iniciar.geracaoThread(filaEspera.get(i), i);
-            System.out.println("Pessoa : " + pessoa.getGenero() + ", ID: " + pessoa.getID() + ", Entrada: " + pessoa.getTempoEntradaFila());
+        //Geração das 3 filas de generos
+        for (int i = 0; i < filaEsperaGeral.size(); i++) {
+            Pessoa pessoa;
+            pessoa = (Pessoa) iniciar.geracaoThread(filaEsperaGeral.get(i), i);
+            if (pessoa.getGenero().equals("GeneroA")) {
+                filaGeneroA.add(pessoa);
+            } else if (pessoa.getGenero().equals("GeneroB")) {
+                filaGeneroB.add(pessoa);
+            } else if (pessoa.getGenero().equals("GeneroC")) {
+                filaGeneroC.add(pessoa);
+            }
         }
 
-        ler.nextInt();
+
+        //Conferindo as filas
+//        for (int i = 0; i < filaGeneroA.size(); i++ ) {
+//            System.out.println("Pessoa : " + filaGeneroA.get(i).getGenero() + ", ID: " + filaGeneroA.get(i).getID());
+//        }
+//
+//        for (int i = 0; i < filaGeneroB.size(); i++ ) {
+//            System.out.println("Pessoa : " + filaGeneroB.get(i).getGenero() + ", ID: " + filaGeneroB.get(i).getID());
+//        }
+//
+//        for (int i = 0; i < filaGeneroC.size(); i++ ) {
+//            System.out.println("Pessoa : " + filaGeneroC.get(i).getGenero() + ", ID: " + filaGeneroC.get(i).getID());
+//        }
 
     }// FIM MAIN
-
-    
 }
