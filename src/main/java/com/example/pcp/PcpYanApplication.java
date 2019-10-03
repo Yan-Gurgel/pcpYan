@@ -12,26 +12,37 @@ public class PcpYanApplication {
     public static void main(String[] args) throws InterruptedException {
         SpringApplication.run(PcpYanApplication.class, args);
 
+        //Variaveis de pessoas e quantidade de box de banheiro
         int numPessoas;
         int numeroBox;
 
+
+        //Filas de cada genero
         ArrayList<Pessoa> filaGeneroA = new ArrayList();
         ArrayList<Pessoa> filaGeneroB = new ArrayList();
         ArrayList<Pessoa> filaGeneroC = new ArrayList();
 
+
+        //Leitura e atribuição do numero de pessoas e box
         Scanner ler = new Scanner(System.in);
         System.out.print("Insira o número de generos: ");
         numPessoas = ler.nextInt();
+
+
         System.out.print("Insira o número de box: ");
         numeroBox = ler.nextInt();
+        Pessoa[] banheiro;
+        banheiro = new Pessoa[numeroBox];
 
+
+        //Geração da fila de espera geral na ordem aleatória de generos
         ArrayList<String> filaEsperaGeral = new ArrayList();
         GeradorGeneros gerar = new GeradorGeneros();
         filaEsperaGeral = gerar.generos(numPessoas);
 
-        GeradorThreads iniciar = new GeradorThreads();
 
         //Geração das 3 filas de generos
+        GeradorThreads iniciar = new GeradorThreads();
         for (int i = 0; i < filaEsperaGeral.size(); i++) {
             Pessoa pessoa;
             pessoa = (Pessoa) iniciar.geracaoThread(filaEsperaGeral.get(i), i);
@@ -44,8 +55,12 @@ public class PcpYanApplication {
             }
         }
 
+        UsarBanheiro usar = new UsarBanheiro();
+        usar.banheiro(filaGeneroA, filaGeneroB, filaGeneroC, banheiro);
 
-        //Conferindo as filas
+
+
+//        //Conferindo as filas
 //        for (int i = 0; i < filaGeneroA.size(); i++ ) {
 //            System.out.println("Pessoa : " + filaGeneroA.get(i).getGenero() + ", ID: " + filaGeneroA.get(i).getID());
 //        }

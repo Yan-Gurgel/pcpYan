@@ -14,14 +14,17 @@ public class GeradorThreads extends Thread {
         DateFormat horaEntradaFila = new SimpleDateFormat("HH:mm:ss");
         Date hora = new Date();
 
+        //Aplicação do Genero e ID
         Pessoa pessoa = new Pessoa();
         pessoa.setGenero(Genero);
         pessoa.setID(ID);
-        sleep(tempo);
+        //Aplicação do tempo de 1-7
+//        sleep(tempo);
+        //Armazenar hora de entrada na fila
         pessoa.setHoraEntradaFila(horaEntradaFila.format(hora));
 
-        System.out.println("\nPessoa: " + pessoa.getGenero() + " chegou na fila, hora: " + pessoa.getHoraEntradaFila());
-        System.out.println("Próximo chega em: " + tempo/1000 + " segundos");
+//        System.out.println("\nPessoa: " + pessoa.getGenero() + " chegou na fila, hora: " + pessoa.getHoraEntradaFila());
+//        System.out.println("Próximo chega em: " + tempo/1000 + " segundos");
 
         pessoa.start();
         return pessoa;
