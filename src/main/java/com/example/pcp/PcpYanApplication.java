@@ -56,7 +56,7 @@ public class PcpYanApplication {
         }
 
         UsarBanheiro usar = new UsarBanheiro();
-        usar.banheiro(filaGeneroA, filaGeneroB, filaGeneroC, banheiro);
+        usar.banheiro(filaGeneroA, filaGeneroB, filaGeneroC, banheiro, numPessoas, numeroBox);
 
 
 
