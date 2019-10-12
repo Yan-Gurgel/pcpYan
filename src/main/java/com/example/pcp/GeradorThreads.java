@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class GeradorThreads extends Thread {
 
-    public Thread geracaoThread(String Genero, int ID) throws InterruptedException {
+    public synchronized Thread geracaoThread(String Genero, int ID) throws InterruptedException {
 
         //tempo de 1-7 segundos para pessoa chegar a fila
         int tempo = (int) (1000 + Math.random() * 7000);
@@ -19,12 +19,12 @@ public class GeradorThreads extends Thread {
         pessoa.setGenero(Genero);
         pessoa.setID(ID);
         //Aplicação do tempo de 1-7
-//        sleep(tempo);
+        sleep(tempo);
         //Armazenar hora de entrada na fila
         pessoa.setHoraEntradaFila(horaEntradaFila.format(hora));
 
-//        System.out.println("\nPessoa: " + pessoa.getGenero() + " chegou na fila, hora: " + pessoa.getHoraEntradaFila());
-//        System.out.println("Próximo chega em: " + tempo/1000 + " segundos");
+        System.out.println("\nPessoa: " + pessoa.getGenero() + " chegou na fila, hora: " + pessoa.getHoraEntradaFila());
+        System.out.println("Próximo chega em: " + tempo/1000 + " segundos");
 
         pessoa.start();
         return pessoa;
