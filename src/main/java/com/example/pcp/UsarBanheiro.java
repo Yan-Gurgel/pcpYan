@@ -5,10 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class UsarBanheiro extends Thread {
+public class UsarBanheiro extends Thread{
+
 
     public synchronized void banheiro(ArrayList<Pessoa> filaGeneroA, ArrayList<Pessoa> filaGeneroB, ArrayList<Pessoa> filaGeneroC,
-                         Pessoa[] banheiro, int totalPessoas, int numBox) throws InterruptedException {
+                                      ArrayList<Pessoa> banheiro, int totalPessoas, int numBox) throws InterruptedException {
         int usoBanheiro = 0;
         int qtdBoxesLivre = numBox;
         String generoUsandoBanheiro = "Livre";
@@ -18,13 +19,10 @@ public class UsarBanheiro extends Thread {
         Date hora = new Date();
 
         while (usoBanheiro < totalPessoas) {
-            if (qtdBoxesLivre == numBox){
-                generoUsandoBanheiro = "Livre";
-            }
 
-            // PRIMEIRA condição: banheiro possui POSSUI TODOS os boxs livres
+            // PRIMEIRA condição: banheiro possui POSSUI TODOS os boxes livres
             if (qtdBoxesLivre == numBox) {
-                System.out.println("---BANHEIRO COMPLETAMENTE VAZIO---");
+                generoUsandoBanheiro = "Livre";
                 //verifica nas 3 filas a pessoa com maior prioridade
                 Pessoa pessoaGeneroA = filaGeneroA.get(0);
                 Pessoa pessoaGeneroB = filaGeneroB.get(0);
@@ -38,79 +36,89 @@ public class UsarBanheiro extends Thread {
                 filaPrioritaria = retornarFilaPrioritaria(filaGeneroA, filaGeneroB, filaGeneroC, prioridade);
 
                 for (int i = 0; i < qtdBoxesLivre; i++) {
-                    if (filaPrioritaria.get(i).getGenero().equals("GeneroA")) {
-                        qtdBoxesLivre--;
-                        filaGeneroA.get(i).setHoraSaidaFila(horaSaidaFila.format(hora));
-                        generoUsandoBanheiro = "GeneroA";
-                        sleep(5000);
-                        System.out.println("Pessoa de " + filaGeneroA.get(i).getGenero() + " usou o banheiro");
-                        filaGeneroA.remove(i);
-                        usoBanheiro++;
-                        qtdBoxesLivre++;
-                    } else if (filaPrioritaria.get(i).getGenero().equals("GeneroB")) {
-                        qtdBoxesLivre--;
-                        filaGeneroB.get(i).setHoraSaidaFila(horaSaidaFila.format(hora));
-                        generoUsandoBanheiro = "GeneroB";
-                        sleep(5000);
-                        System.out.println("Pessoa de " + filaGeneroB.get(i).getGenero() + " usou o banheiro");
-                        filaGeneroB.remove(i);
-                        usoBanheiro++;
-                        qtdBoxesLivre++;
+                    if(filaPrioritaria.get(i) != null){
+                        if (filaPrioritaria.get(i).getGenero().equals("GeneroA")) {
+                            qtdBoxesLivre--;
+                            filaGeneroA.get(i).setHoraSaidaFila(horaSaidaFila.format(hora));
+                            generoUsandoBanheiro = "GeneroA";
+                            //pessoa entra no banheiro
+                            banheiro.add(filaGeneroA.get(i));
+                            //pessoa removida da fila
+                            filaGeneroA.remove(i);
+                            System.out.println("Pessoa de " + filaGeneroA.get(i).getGenero() + " usou o banheiro");
 
-                    } else if (filaPrioritaria.get(i).getGenero().equals("GeneroC")) {
-                        qtdBoxesLivre--;
-                        filaGeneroC.get(i).setHoraSaidaFila(horaSaidaFila.format(hora));
-                        generoUsandoBanheiro = "GeneroC";
-                        sleep(5000);
-                        System.out.println("Pessoa de " + filaGeneroC.get(i).getGenero() + " usou o banheiro");
-                        filaGeneroC.remove(i);
+                        } else if (filaPrioritaria.get(i).getGenero().equals("GeneroB")) {
+                            qtdBoxesLivre--;
+                            filaGeneroB.get(i).setHoraSaidaFila(horaSaidaFila.format(hora));
+                            generoUsandoBanheiro = "GeneroB";
+                            //pessoa entra no banheiro
+                            banheiro.add(filaGeneroB.get(i));
+                            //pessoa removida da fila
+                            filaGeneroB.remove(i);
+                            System.out.println("Pessoa de " + filaGeneroB.get(i).getGenero() + " usou o banheiro");
+
+                        } else if (filaPrioritaria.get(i).getGenero().equals("GeneroC")) {
+                            qtdBoxesLivre--;
+                            filaGeneroC.get(i).setHoraSaidaFila(horaSaidaFila.format(hora));
+                            generoUsandoBanheiro = "GeneroC";
+                            //pessoa entra no banheiro
+                            banheiro.add(filaGeneroC.get(i));
+                            //pessoa removida da fila
+                            filaGeneroC.remove(i);
+                            System.out.println("Pessoa de " + filaGeneroC.get(i).getGenero() + " usou o banheiro");
+                        }
                         usoBanheiro++;
                         qtdBoxesLivre++;
-
                     }
+                    sleep(5000);
+                    banheiro.clear();
                 }
             }
             // SEGUNDA condição: banheiro possui pelo menos um box em uso
-            else if (qtdBoxesLivre > 0 & qtdBoxesLivre != numBox) {
+            else if (qtdBoxesLivre > 0) {
+                // System.out.println("BANHEIRO AINDA POSSUI PELO MENOS 1 GENERO");
                 if (generoUsandoBanheiro.equals("GeneroA")) {
                     for (int i = 0; i < qtdBoxesLivre; i++) {
                         qtdBoxesLivre--;
                         filaGeneroA.get(i).setHoraSaidaFila(horaSaidaFila.format(hora));
                         generoUsandoBanheiro = "GeneroA";
-                        sleep(5000);
+                        //pessoa entra no banheiro
+                        banheiro.add(filaGeneroA.get(i));
                         System.out.println("Pessoa de " + filaGeneroA.get(i).getGenero() + " usou o banheiro");
+                        //pessoa removida da fila
                         filaGeneroA.remove(i);
-                        usoBanheiro++;
-                        qtdBoxesLivre++;
+
                     }
                 } else if (generoUsandoBanheiro.equals("GeneroB")) {
                     for (int i = 0; i < qtdBoxesLivre; i++) {
                         qtdBoxesLivre--;
                         filaGeneroB.get(i).setHoraSaidaFila(horaSaidaFila.format(hora));
                         generoUsandoBanheiro = "GeneroB";
-                        sleep(5000);
+                        //pessoa entra no banheiro
+                        banheiro.add(filaGeneroB.get(i));
                         System.out.println("Pessoa de " + filaGeneroB.get(i).getGenero() + " usou o banheiro");
+                        //pessoa removida da fila
                         filaGeneroB.remove(i);
-                        usoBanheiro++;
-                        qtdBoxesLivre++;
                     }
                 } else if (generoUsandoBanheiro.equals("GeneroC")) {
                     for (int i = 0; i < qtdBoxesLivre; i++) {
                         qtdBoxesLivre--;
                         filaGeneroC.get(i).setHoraSaidaFila(horaSaidaFila.format(hora));
                         generoUsandoBanheiro = "GeneroC";
-                        sleep(5000);
+                        //pessoa entra no banheiro
+                        banheiro.add(filaGeneroC.get(i));
                         System.out.println("Pessoa de " + filaGeneroC.get(i).getGenero() + " usou o banheiro");
+                        //pessoa removida da fila
                         filaGeneroC.remove(i);
-                        usoBanheiro++;
-                        qtdBoxesLivre++;
+
                     }
+                    usoBanheiro++;
+                    qtdBoxesLivre++;
                 }
+                sleep(5000);
+                banheiro.clear();
             }
         }
-
-
-
     }
 
     public ArrayList<Pessoa> retornarFilaPrioritaria(ArrayList<Pessoa> filaGeneroA, ArrayList<Pessoa> filaGeneroB, ArrayList<Pessoa> filaGeneroC, Pessoa prioridade) {
@@ -158,4 +166,5 @@ public class UsarBanheiro extends Thread {
         }
         return maiorPrioridade;
     }
+
 }

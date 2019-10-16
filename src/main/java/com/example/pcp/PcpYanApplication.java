@@ -26,14 +26,12 @@ public class PcpYanApplication {
 
         //Leitura e atribuição do numero de pessoas e box
         Scanner ler = new Scanner(System.in);
-        System.out.print("Insira o número de generos: ");
+        System.out.print("Insira o número de pessoas: ");
         numPessoas = ler.nextInt();
-
-
-        System.out.print("Insira o número de box: ");
+        //---------------------------------------------------//
+        System.out.print("Insira o número de boxes: ");
         numeroBox = ler.nextInt();
-        Pessoa[] banheiro;
-        banheiro = new Pessoa[numeroBox];
+        ArrayList<Pessoa> banheiro = new ArrayList(numeroBox);
 
 
         //Geração da fila de espera geral na ordem aleatória de generos
@@ -45,12 +43,9 @@ public class PcpYanApplication {
         //Geração das 3 filas de generos
         gerarFilas(filaGeneroA, filaGeneroB, filaGeneroC, filaEsperaGeral);
 
-
-        /**** EM CONTRUÇÃO ****/
+        //uso do Banheiro
         UsarBanheiro usar = new UsarBanheiro();
         usar.banheiro(filaGeneroA, filaGeneroB, filaGeneroC, banheiro, numPessoas, numeroBox);
-
-
 
     }// FIM MAIN
 
